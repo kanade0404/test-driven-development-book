@@ -14,3 +14,10 @@ func TestMultiplication(t *testing.T) {
 		assert.Equal(t, 15, product.amount)
 	})
 }
+func TestEquality(t *testing.T) {
+	t.Run("Dollar values is equality", func(t *testing.T) {
+		dollar := Dollar{5}
+		assert.True(t, dollar.equals(Dollar{5}))
+		assert.False(t, dollar.equals(Dollar{6}))
+	})
+}
