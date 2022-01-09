@@ -6,11 +6,15 @@ on:
   pull_request:
     branches: [ master ]
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./golang
+
 jobs:
 
   build:
     runs-on: ubuntu-latest
-    working-directory: ./golang
     steps:
     - uses: actions/checkout@v2
 
