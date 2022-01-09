@@ -10,6 +10,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    working-directory: ./golang
     steps:
     - uses: actions/checkout@v2
 
