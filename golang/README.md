@@ -8,5 +8,5 @@
 - [ ] 他のオブジェクトとの等価性比較
 - [x] ~~5CHF * 2 = 10CHF~~
 - [ ] Dollarとfrancの重複
-- [ ] equalsの一般化
+- [x] ~~equalsの一般化~~
 - [ ] timesの一般化

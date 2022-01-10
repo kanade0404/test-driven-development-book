@@ -1,14 +1,12 @@
 package main
 
 type Franc struct {
-	amount int
+	Money
 }
 
-func (f *Franc) times(multiplier int) Franc {
-	return Franc{f.amount * multiplier}
+func NewFranc(amount int) Money {
+	return Money{amount: amount}
 }
-
-func (f *Franc) equals(object interface{}) bool {
-	franc := object.(Franc)
-	return f.amount == franc.amount
+func (f *Franc) Times(multiplier int) Money {
+	return Money{f.amount * multiplier}
 }

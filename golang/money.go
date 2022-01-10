@@ -1,14 +1,21 @@
 package main
 
-type Dollar struct {
+var _ Moneyer = (*Money)(nil)
+
+type Moneyer interface {
+	Equals(object interface{}) bool
+	Times(multiplier int) Money
+}
+
+type Money struct {
 	amount int
 }
 
-func (d *Dollar) times(multiplier int) Dollar {
-	return Dollar{d.amount * multiplier}
+func (m *Money) Equals(object interface{}) bool {
+	money := object.(Money)
+	return money.amount == m.amount
 }
 
-func (d *Dollar) equals(object interface{}) bool {
-	dollar := object.(Dollar)
-	return d.amount == dollar.amount
+func (m *Money) Times(multiplier int) Money {
+	return Money{m.amount * multiplier}
 }
