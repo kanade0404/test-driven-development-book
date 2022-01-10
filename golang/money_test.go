@@ -90,3 +90,11 @@ func TestCurrency(t *testing.T) {
 		})
 	}
 }
+
+func TestSimpleAddition(t *testing.T) {
+	five := NewDollar(5)
+	sum := five.Plus(NewDollar(5))
+	bank := Bank{}
+	reduce := bank.reduce(sum, "USD")
+	assert.Equal(t, NewDollar(10), reduce)
+}

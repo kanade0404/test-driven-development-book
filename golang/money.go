@@ -36,6 +36,10 @@ func (m *Money) Equals(object interface{}) bool {
 	return money.amount == m.amount && money.currency == m.currency
 }
 
+func (m *Money) Plus(addend Money) Money {
+	return NewMoney(m.amount+addend.amount, m.currency)
+}
+
 func (m *Money) Times(multiplier int) Money {
 	return Money{m.amount * multiplier, m.currency}
 }
