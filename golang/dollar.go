@@ -5,9 +5,9 @@ type Dollar struct {
 }
 
 func NewDollar(amount int) Money {
-	return Money{amount: amount}
+	return NewMoney(amount, "USD")
 }
 
-func (d *Dollar) Times(multiplier int) Money {
-	return Money{d.amount * multiplier}
+func (d *Dollar) NewDollar(multiplier int) Money {
+	return NewDollar(d.amount * multiplier)
 }

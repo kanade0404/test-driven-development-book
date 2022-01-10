@@ -5,8 +5,8 @@ type Franc struct {
 }
 
 func NewFranc(amount int) Money {
-	return Money{amount: amount}
+	return NewMoney(amount, "CHF")
 }
 func (f *Franc) Times(multiplier int) Money {
-	return Money{f.amount * multiplier}
+	return NewFranc(f.amount * multiplier)
 }
