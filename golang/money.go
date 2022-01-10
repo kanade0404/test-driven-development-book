@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 var _ Moneyer = (*Money)(nil)
+var _ Expression = (*Money)(nil)
 
 type Moneyer interface {
 	Equals(object interface{}) bool
@@ -27,22 +28,25 @@ func NewFranc(amount int) Money {
 	return NewMoney(amount, "CHF")
 }
 
-func (m *Money) Currency() string {
+func (m Money) Currency() string {
 	return m.currency
 }
 
-func (m *Money) Equals(object interface{}) bool {
+func (m Money) Equals(object interface{}) bool {
 	money := object.(Money)
 	return money.amount == m.amount && money.currency == m.currency
 }
 
-func (m *Money) Plus(addend Money) Money {
-	return NewMoney(m.amount+addend.amount, m.currency)
+func (m Money) Plus(addend Money) Expression {
+	return NewSum(NewMoney(m.amount, m.currency), addend)
+}
+func (m Money) Reduce(to string) Money {
+	return NewMoney(m.amount, m.currency)
 }
 
-func (m *Money) Times(multiplier int) Money {
-	return Money{m.amount * multiplier, m.currency}
+func (m Money) Times(multiplier int) Money {
+	return NewMoney(m.amount*multiplier, m.currency)
 }
-func (m *Money) String() string {
+func (m Money) String() string {
 	return fmt.Sprintf("Amount: %d, Currency: %s", m.amount, m.currency)
 }

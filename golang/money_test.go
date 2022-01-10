@@ -95,6 +95,43 @@ func TestSimpleAddition(t *testing.T) {
 	five := NewDollar(5)
 	sum := five.Plus(NewDollar(5))
 	bank := Bank{}
-	reduce := bank.reduce(sum, "USD")
+	reduce := bank.Reduce(sum, "USD")
 	assert.Equal(t, NewDollar(10), reduce)
+}
+
+func TestPlusReturnSum(t *testing.T) {
+	five := NewDollar(5)
+	result := five.Plus(five)
+	sum := result.(Sum)
+	for _, td := range []struct {
+		expected int
+		actual   int
+	}{
+		{
+			expected: five.amount,
+			actual:   sum.augend.amount,
+		},
+		{
+			expected: five.amount,
+			actual:   sum.addend.amount,
+		},
+	} {
+		t.Run(fmt.Sprintf("$5 + $5 returns %d", td.expected), func(t *testing.T) {
+			assert.Equal(t, td.expected, td.actual)
+		})
+	}
+}
+
+func TestReduceSum(t *testing.T) {
+	sum := NewSum(NewDollar(3), NewDollar(4))
+	bank := Bank{}
+	result := bank.Reduce(sum, "USD")
+	assert.Equal(t, NewDollar(7), result)
+}
+
+func TestReduceMoney(t *testing.T) {
+	bank := Bank{}
+	dollar := NewDollar(1)
+	result := bank.Reduce(dollar, "USD")
+	assert.Equal(t, NewDollar(1), result)
 }
