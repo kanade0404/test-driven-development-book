@@ -7,7 +7,7 @@ var _ Expression = (*Money)(nil)
 
 type Moneyer interface {
 	Equals(object interface{}) bool
-	Times(multiplier int) Money
+	Times(multiplier int) Expression
 	Currency() string
 }
 
@@ -37,17 +37,19 @@ func (m Money) Equals(object interface{}) bool {
 	return money.amount == m.amount && money.currency == m.currency
 }
 
-func (m Money) Plus(addend Money) Expression {
+func (m Money) Plus(addend Expression) Expression {
 	return NewSum(NewMoney(m.amount, m.currency), addend)
 }
+
 func (m Money) Reduce(bank Bank, to string) Money {
 	rate := bank.Rate(m.Currency(), to)
 	return NewMoney(m.amount/rate, to)
 }
 
-func (m Money) Times(multiplier int) Money {
+func (m Money) Times(multiplier int) Expression {
 	return NewMoney(m.amount*multiplier, m.currency)
 }
+
 func (m Money) String() string {
 	return fmt.Sprintf("Amount: %d, Currency: %s", m.amount, m.currency)
 }

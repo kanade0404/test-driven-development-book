@@ -159,3 +159,12 @@ func TestIdentityRate(t *testing.T) {
 	bank := Bank{}
 	assert.Equal(t, 1, bank.Rate("USD", "USD"))
 }
+
+func TestMixedAddition(t *testing.T) {
+	fiveBucks := NewDollar(5)
+	tenFrancs := NewFranc(10)
+	bank := NewBank()
+	bank.AddRate("CHF", "USD", 2)
+	result := bank.Reduce(fiveBucks.Plus(tenFrancs), "USD")
+	assert.Equal(t, NewDollar(10), result)
+}
