@@ -104,19 +104,19 @@ func TestPlusReturnSum(t *testing.T) {
 	result := five.Plus(five)
 	sum := result.(Sum)
 	for _, td := range []struct {
-		expected int
-		actual   int
+		expected Money
+		actual   Expression
 	}{
 		{
-			expected: five.amount,
-			actual:   sum.augend.amount,
+			expected: five,
+			actual:   sum.augend,
 		},
 		{
-			expected: five.amount,
-			actual:   sum.addend.amount,
+			expected: five,
+			actual:   sum.addend,
 		},
 	} {
-		t.Run(fmt.Sprintf("$5 + $5 returns %d", td.expected), func(t *testing.T) {
+		t.Run(fmt.Sprintf("$5 + $5 returns %v", td.expected), func(t *testing.T) {
 			assert.Equal(t, td.expected, td.actual)
 		})
 	}
@@ -167,4 +167,24 @@ func TestMixedAddition(t *testing.T) {
 	bank.AddRate("CHF", "USD", 2)
 	result := bank.Reduce(fiveBucks.Plus(tenFrancs), "USD")
 	assert.Equal(t, NewDollar(10), result)
+}
+
+func TestSumPlusMoney(t *testing.T) {
+	fiveBucks := NewDollar(5)
+	tenFrancs := NewFranc(10)
+	bank := NewBank()
+	bank.AddRate("CHF", "USD", 2)
+	sum := NewSum(fiveBucks, tenFrancs).Plus(fiveBucks)
+	result := bank.Reduce(sum, "USD")
+	assert.Equal(t, NewDollar(15), result)
+}
+
+func TestSumTimes(t *testing.T) {
+	fiveBucks := NewDollar(5)
+	tenFrancs := NewFranc(10)
+	bank := NewBank()
+	bank.AddRate("CHF", "USD", 2)
+	sum := NewSum(fiveBucks, tenFrancs).Times(2)
+	result := bank.Reduce(sum, "USD")
+	assert.Equal(t, NewDollar(20), result)
 }
