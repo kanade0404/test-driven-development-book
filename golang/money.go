@@ -40,8 +40,9 @@ func (m Money) Equals(object interface{}) bool {
 func (m Money) Plus(addend Money) Expression {
 	return NewSum(NewMoney(m.amount, m.currency), addend)
 }
-func (m Money) Reduce(to string) Money {
-	return NewMoney(m.amount, m.currency)
+func (m Money) Reduce(bank Bank, to string) Money {
+	rate := bank.Rate(m.Currency(), to)
+	return NewMoney(m.amount/rate, to)
 }
 
 func (m Money) Times(multiplier int) Money {
