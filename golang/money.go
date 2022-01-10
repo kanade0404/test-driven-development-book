@@ -19,6 +19,14 @@ func NewMoney(amount int, currency string) Money {
 	return Money{amount, currency}
 }
 
+func NewDollar(amount int) Money {
+	return NewMoney(amount, "USD")
+}
+
+func NewFranc(amount int) Money {
+	return NewMoney(amount, "CHF")
+}
+
 func (m *Money) Currency() string {
 	return m.currency
 }
