@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var _ Moneyer = (*Money)(nil)
 
 type Moneyer interface {
@@ -28,4 +30,7 @@ func (m *Money) Equals(object interface{}) bool {
 
 func (m *Money) Times(multiplier int) Money {
 	return Money{m.amount * multiplier, m.currency}
+}
+func (m *Money) String() string {
+	return fmt.Sprintf("Amount: %d, Currency: %s", m.amount, m.currency)
 }
